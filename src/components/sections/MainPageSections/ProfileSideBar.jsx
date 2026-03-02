@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import saveIcon from "../../../assets/Icons/bookmarkIcon.svg"
 
 /* ──────────────────────────────────────────
    MAIN COMPONENT
@@ -6,6 +7,9 @@ import styled from "styled-components";
 export default function ProfileSidebar() {
   return (
     <SidebarWrapper>
+      <SearchBox>
+        <input type="text" placeholder="Search" />
+      </SearchBox>
       {/* Profile Card */}
       <ProfileCard>
         <ProfileBanner />
@@ -45,12 +49,9 @@ export default function ProfileSidebar() {
 
       {/* Saved Items */}
       <SavedItemsCard>
-        <BookmarkIcon />
+        <img src={saveIcon} alt="bookmark icon" />
         <SavedItemsLabel>Saved items</SavedItemsLabel>
       </SavedItemsCard>
-
-      {/* Grey Pill */}
-      <GreyPill />
 
       {/* Footer Links */}
       <FooterWrapper>
@@ -96,6 +97,26 @@ const SidebarWrapper = styled.aside`
   width: 272px;
   font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
 `;
+
+const SearchBox = styled.div`
+    width: 100%;
+    height: 32px;
+    input{
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        background-color: var(--light-ash);
+        color: black;
+        border: none;
+        padding-left: 20px;
+        &::placeholder{
+            color: var(--grey);
+        }
+        &:active{
+            border: none;
+        }
+    }
+`
 
 /* ──────────────────────────────────────────
    PROFILE CARD
