@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import saveIcon from "../../../assets/Icons/bookmarkIcon.svg"
+import SearchBox from "../../ui/SearchBox";
 
 /* ──────────────────────────────────────────
    MAIN COMPONENT
@@ -7,9 +8,7 @@ import saveIcon from "../../../assets/Icons/bookmarkIcon.svg"
 export default function ProfileSidebar() {
   return (
     <SidebarWrapper>
-      <SearchBox>
-        <input type="text" placeholder="Search" />
-      </SearchBox>
+      <SearchBox width = {"100%"}/>
       {/* Profile Card */}
       <ProfileCard>
         <ProfileBanner />
@@ -98,25 +97,7 @@ const SidebarWrapper = styled.aside`
   font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
 `;
 
-const SearchBox = styled.div`
-    width: 100%;
-    height: 32px;
-    input{
-        width: 100%;
-        height: 100%;
-        border-radius: 20px;
-        background-color: var(--light-ash);
-        color: black;
-        border: none;
-        padding-left: 20px;
-        &::placeholder{
-            color: var(--grey);
-        }
-        &:active{
-            border: none;
-        }
-    }
-`
+
 
 /* ──────────────────────────────────────────
    PROFILE CARD
