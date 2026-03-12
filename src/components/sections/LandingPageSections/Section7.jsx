@@ -11,6 +11,7 @@ import faq4 from "../../../assets/Images/faq4.svg"
 import bgGreaterThan from "../../../assets/Icons/bgGreaterThan.svg"
 import bgLessThan from "../../../assets/Icons/bgLessThan.svg"   
 import { useScreenWidth } from "../../../utils/useSreenWidth";
+import { useNavigate } from "react-router-dom";
 
 const BoxWrapper = styled.div`
   height: auto;
@@ -61,7 +62,7 @@ const DivInlineFlex = styled.div`
   gap: 6px;
 `;
 
-const GetStarted = styled.div`
+const GetStarted = styled.button`
   color: var(--blue);
   font-family: "Inter-Medium", Helvetica;
   font-size: 14px;
@@ -70,6 +71,10 @@ const GetStarted = styled.div`
   line-height: normal;
   text-align: center;
   width: fit-content;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 `;
 
 const MainCon = styled.div`
@@ -138,6 +143,7 @@ const Frame7 = styled.div`
 
 export default function Section7() {
     const screenWidth = useScreenWidth();
+    const navigate = useNavigate();
     const faq = screenWidth > 700 ? "Frequently Asked Questions" : "FAQs";
   return (
     <BoxWrapper className="box">
@@ -148,7 +154,13 @@ export default function Section7() {
           </FrequentlyAsked>
 
           <DivInlineFlex className="div">
-            <GetStarted className="get-started">Get Started ↗</GetStarted>
+            <GetStarted
+              className="get-started"
+              type="button"
+              onClick={() => navigate('/signup')}
+            >
+              Get Started ↗
+            </GetStarted>
           </DivInlineFlex>
         </Frame>
 

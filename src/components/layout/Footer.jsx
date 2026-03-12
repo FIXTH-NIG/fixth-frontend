@@ -5,11 +5,13 @@ import xIcon from '../../assets/Icons/x.svg'
 import LinkedInIcon from '../../assets/Icons/Linkedin.svg'
 import InstagramIcon from '../../assets/Icons/Instagram.svg'
 import { useScreenWidth } from '../../utils/useSreenWidth'
+import { useNavigate } from 'react-router-dom'
 
 // ─── Footer Component ─────────────────────────────────────────────────────────
 
 export default function Footer() {
     const screenWidth = useScreenWidth();
+    const navigate = useNavigate();
   return (
     <FooterWrapper>
       {/* Top bar: logo + social icons */}
@@ -41,7 +43,15 @@ export default function Footer() {
             <NavColumn>
               <NavHeading>For students</NavHeading>
               <NavLinks>
-                <NavLink href="#">Get Started Free</NavLink>
+                <NavLink
+                  href="/signup"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigate('/signup');
+                  }}
+                >
+                  Get Started Free
+                </NavLink>
                 <NavLink href="#">Find Jobs</NavLink>
                 <NavLink href="#">Success Stories</NavLink>
                 <NavLink href="#">FAQs</NavLink>

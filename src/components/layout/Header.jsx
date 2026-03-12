@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import FixthLogo from '../../assets/Icons/Fixth.svg';
 import FLogo from '../../assets/Icons/FixthF-logo.svg';
@@ -61,13 +62,15 @@ function HamburgerMenu({ onClose }) {
   );
 }
 
-function NavTabCard({ item }) {
+function NavTabCard({ item, onCtaClick }) {
   return (
     <TabCard role="dialog" aria-label={`${item.label} details`}>
       <TabCardBody>
         <TabCardTitle>{item.title}</TabCardTitle>
         <TabCardDescription>{item.description}</TabCardDescription>
-        <TabCardCta type="button">Start using Fixth</TabCardCta>
+        <TabCardCta type="button" onClick={onCtaClick}>
+          Start using Fixth
+        </TabCardCta>
       </TabCardBody>
       <TabCardImage src={item.img} alt={`${item.label} preview`} />
     </TabCard>
@@ -76,6 +79,7 @@ function NavTabCard({ item }) {
 
 export default function Header() {
   const screenWidth = useScreenWidth();
+  const navigate = useNavigate();
   const isMobile = screenWidth <= 1024;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDesktopTab, setActiveDesktopTab] = useState(null);
@@ -88,6 +92,10 @@ export default function Header() {
   const closeAll = () => {
     setIsMenuOpen(false);
     setActiveDesktopTab(null);
+  };
+
+  const goToSignup = () => {
+    navigate('/signup');
   };
 
   useEffect(() => {
@@ -139,7 +147,9 @@ export default function Header() {
               </NabBtns>
               <AuthNavigation>
                 <button type="button">Log In</button>
-                <button type="button">Sign Up</button>
+                <button type="button" onClick={goToSignup}>
+                  Sign Up
+                </button>
               </AuthNavigation>
             </>
           ) : (
@@ -158,7 +168,9 @@ export default function Header() {
           )}
         </HeaderContainer>
         {showMobileMenu && <HamburgerMenu onClose={closeAll} />}
-        {showDesktopCard && <NavTabCard item={activeTabData} />}
+        {showDesktopCard && (
+          <NavTabCard item={activeTabData} onCtaClick={goToSignup} />
+        )}
       </HeaderShell>
     </>
   );

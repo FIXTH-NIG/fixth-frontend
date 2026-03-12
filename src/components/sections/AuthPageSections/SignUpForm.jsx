@@ -2,8 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import apple from "../../../assets/Icons/apple.svg"
 import google from "../../../assets/Icons/google.svg"
+import { useNavigate } from 'react-router-dom'
 
 export default function SignUpForm() {
+  const navigate = useNavigate()
   return (
     <SignUpFormContainer>
         <div className="sec1">
@@ -35,7 +37,7 @@ export default function SignUpForm() {
                 <input type="checkbox" id='termsAndCondition' name='termsAndCondition' value={"yes"} />
                 <span>By registering you agree with our terms & conditions</span>
             </div>
-            <button>
+            <button type="button" onClick={() => navigate('/app')}>
                 Create account
             </button>
             <div className="alreadyHaveAnAcc">

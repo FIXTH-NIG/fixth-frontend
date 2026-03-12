@@ -5,6 +5,7 @@ import CameraIcon from "../../../assets/Icons/cameraIcon.svg"
 import LocationIcon from "../../../assets/Icons/locationIcon.svg"
 import PlusIcon from "../../../assets/Icons/plusIcon.svg"
 import ArrowLeftIcon from "../../../assets/Icons/leftArrowIcon.svg"
+import { useNavigate } from "react-router-dom";
 
 // ─── Styled Components ────────────────────────────────────────────────────────
 
@@ -344,6 +345,7 @@ const sections = [
 // ─── App ──────────────────────────────────────────────────────────────────────
 
 export default function EditProfile() {
+  const navigate = useNavigate();
   return (
     <PageWrapper>
       <PageHeader>
@@ -399,7 +401,9 @@ export default function EditProfile() {
               <img src={ArrowLeftIcon} alt="back btn" />
               Back
             </BackButton>
-            <ContinueButton>Continue</ContinueButton>
+            <ContinueButton type="button" onClick={() => navigate('/app')}>
+              Continue
+            </ContinueButton>
           </BottomNav>
         </SectionsWrapper>
       </ProfileCard>
