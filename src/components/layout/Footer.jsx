@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import FixthLogo from '../../assets/Icons/Fixth.svg'
 import FixthFLogo from '../../assets/Icons/FixthF-logo.svg'
 import xIcon from '../../assets/Icons/x.svg'
-import LinkedInIcon from '../../assets/Icons/Linkedin.svg'
-import InstagramIcon from '../../assets/Icons/Instagram.svg'
+import LinkedInIcon from '../../assets/Icons/linkedin.svg'
+import InstagramIcon from '../../assets/Icons/instagram.svg'
 import { useScreenWidth } from '../../utils/useSreenWidth'
 import { useNavigate } from 'react-router-dom'
 
