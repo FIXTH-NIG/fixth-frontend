@@ -4,7 +4,7 @@ import PeopleFacesCluster from "../../../assets/Images/PeopleFacesCluster.svg"
 import turnado from "../../../assets/Icons/turnado.svg"
 import spiralArrow from "../../../assets/Icons/spiralArrow.svg"
 import pcGuy from "../../../assets/Images/pcGuy.svg"
-import toolBox from "../../../assets/Icons/blueToolbox.svg"
+import toolBox from "../../../assets/Icons/blueToolBox.svg"
 
 export default function Section1() {
   return (   
