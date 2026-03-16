@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import caseIcon from "../../../assets/icons/case.svg"
-import userIcon from "../../../assets/icons/user.svg"
+import caseIcon from "../../../assets/Icons/case.svg"
+import userIcon from "../../../assets/Icons/user.svg"
 
 export default function ChooseUserType() {
     return (
