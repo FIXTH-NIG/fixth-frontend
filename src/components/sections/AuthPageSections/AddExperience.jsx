@@ -3,7 +3,7 @@ import addImg1 from "../../../assets/Images/addExp1.svg"
 import addImg2 from "../../../assets/Images/addExp2.svg"
 import addImg3 from "../../../assets/Images/addExp3.svg"
 
-export default function AddExperience() {
+export default function AddExperience({ onNext }) {
   return (
     <AddExperienceContainer>
         <div className="header">
@@ -14,7 +14,7 @@ export default function AddExperience() {
             </span>
         </div>
         <div className="addExp">
-            <button>
+            <button type="button" onClick={onNext}>
                 Add your experience
             </button>
             <div className="imgRow">

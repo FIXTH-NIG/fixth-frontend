@@ -159,7 +159,7 @@ const DifferentEmailLink = styled.button`
 
 const OTP_LENGTH = 6;
 
-export default function VerificationCode() {
+export default function VerificationCode({ onNext, onBack }) {
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(''));
   const inputRefs = useRef([]);
 
@@ -191,6 +191,10 @@ export default function VerificationCode() {
 
   const handleVerify = () => {
     const code = otp.join('');
+    if (onNext) {
+      onNext();
+      return;
+    }
     if (code.length === OTP_LENGTH) {
       alert(`Verifying code: ${code}`);
     }
@@ -235,7 +239,9 @@ export default function VerificationCode() {
           </ResendText>
         </ActionsGroup>
 
-        <DifferentEmailLink>Use a different email</DifferentEmailLink>
+        <DifferentEmailLink type="button" onClick={onBack}>
+          Use a different email
+        </DifferentEmailLink>
       </Card>
     </PageWrapper>
   );

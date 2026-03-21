@@ -344,8 +344,24 @@ const sections = [
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 
-export default function EditProfile() {
+export default function EditProfile({ onNext, onBack }) {
   const navigate = useNavigate();
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack()
+      return
+    }
+    navigate(-1)
+  }
+
+  const handleContinue = () => {
+    if (onNext) {
+      onNext()
+      return
+    }
+    navigate('/app')
+  }
   return (
     <PageWrapper>
       <PageHeader>
@@ -397,11 +413,11 @@ export default function EditProfile() {
 
           {/* Navigation */}
           <BottomNav>
-            <BackButton>
+            <BackButton type="button" onClick={handleBack}>
               <img src={ArrowLeftIcon} alt="back btn" />
               Back
             </BackButton>
-            <ContinueButton type="button" onClick={() => navigate('/app')}>
+            <ContinueButton type="button" onClick={handleContinue}>
               Continue
             </ContinueButton>
           </BottomNav>

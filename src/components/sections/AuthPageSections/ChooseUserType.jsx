@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import caseIcon from "../../../assets/Icons/case.svg"
 import userIcon from "../../../assets/Icons/user.svg"
 
-export default function ChooseUserType() {
+export default function ChooseUserType({ onNext }) {
     return (
         <ChooseUserTypeContainer>
             <h1 className="title">
@@ -26,7 +26,7 @@ export default function ChooseUserType() {
                 </div>
             </div>
             <div className='container2'>
-                <button>
+                <button type="button" onClick={onNext}>
                     Apply as a company
                 </button>
                 <div>Already have an account? <a href="">Sign in</a></div>
