@@ -1,11 +1,13 @@
 ﻿import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 import settingsIcon from '../../../assets/Icons/settingsIcon.svg'
 import notificationIcon from '../../../assets/Icons/notificationIcon.svg'
 import inboxIcon from '../../../assets/Icons/inboxIcon.svg'
 import homeIcon from '../../../assets/Icons/homeIcon.svg'
 import caseIcon from '../../../assets/Icons/case.svg'
 import dummyPP from '../../../assets/Images/dummyProfile.png'
-import { SIDEBAR_TABS, TAB_IDS } from './navigationTabs'
+import { ROUTES } from '../../../routes'
+import { SIDEBAR_TABS } from './navigationTabs'
 
 const iconMap = {
   home: homeIcon,
@@ -14,15 +16,15 @@ const iconMap = {
   inbox: inboxIcon,
 }
 
-export default function Sidebar({ activeTab, onTabChange }) {
+export default function Sidebar() {
   return (
     <NavWrapper>
       <NavGroup>
         {SIDEBAR_TABS.map((tab) => (
           <NavItem
             key={tab.id}
-            $active={activeTab === tab.id}
-            onClick={() => onTabChange(tab.id)}
+            to={tab.to}
+            className={({ isActive }) => (isActive ? 'active' : '')}
           >
             <NavItemContent>
               {tab.icon === 'profile' ? (
@@ -30,7 +32,7 @@ export default function Sidebar({ activeTab, onTabChange }) {
               ) : (
                 <img src={iconMap[tab.icon]} alt={`${tab.label} icon`} />
               )}
-              <NavLabel $active={activeTab === tab.id}>{tab.label}</NavLabel>
+              <NavLabel>{tab.label}</NavLabel>
             </NavItemContent>
           </NavItem>
         ))}
@@ -41,12 +43,12 @@ export default function Sidebar({ activeTab, onTabChange }) {
       </PostButtonWrap>
 
       <NavItem
-        $active={activeTab === TAB_IDS.settings}
-        onClick={() => onTabChange(TAB_IDS.settings)}
+        to={ROUTES.appSettings}
+        className={({ isActive }) => (isActive ? 'active' : '')}
       >
         <NavItemContent>
           <img src={settingsIcon} alt="settings icon" />
-          <NavLabel $active={activeTab === TAB_IDS.settings}>Settings</NavLabel>
+          <NavLabel>Settings</NavLabel>
         </NavItemContent>
       </NavItem>
     </NavWrapper>
@@ -69,14 +71,19 @@ const NavGroup = styled.div`
   gap: 6px;
 `
 
-const NavItem = styled.button`
+const NavItem = styled(NavLink)`
   width: 132px;
   height: 32px;
   border-radius: 40px;
-  background: ${({ $active }) => ($active ? '#D9D9D9' : 'rgba(228, 228, 228, 1)')};
+  background: rgba(228, 228, 228, 1);
   display: flex;
   align-items: center;
   padding: 0;
+  text-decoration: none;
+
+  &.active {
+    background: #D9D9D9;
+  }
 `
 
 const NavItemContent = styled.div`
@@ -89,8 +96,12 @@ const NavItemContent = styled.div`
 const NavLabel = styled.span`
   color: rgba(31, 31, 31, 1);
   font-size: 14px;
-  font-weight: ${({ $active }) => ($active ? '600' : '500')};
+  font-weight: 500;
   line-height: normal;
+
+  ${NavItem}.active & {
+    font-weight: 600;
+  }
 `
 
 const PostButtonWrap = styled.div`
@@ -111,4 +122,3 @@ const Avatar = styled.img`
   height: 22px;
   border-radius: 50%;
 `
-

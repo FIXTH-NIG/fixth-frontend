@@ -1,14 +1,17 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { inboxThreads } from "./inboxData";
+import { inboxThreads } from "../../../../data/mock";
+import { ROUTES } from "../../../../routes";
 
 const FILTERS = [
   { id: "all", label: "All" },
   { id: "unread", label: "Unread" },
 ];
 
-export default function InboxListPanel({ activeThreadId, onSelectThread }) {
+export default function InboxListPanel({ activeThreadId }) {
   const [activeFilter, setActiveFilter] = useState("all");
+  const navigate = useNavigate();
 
   const filteredThreads = useMemo(() => {
     if (activeFilter === "all") {
@@ -17,6 +20,10 @@ export default function InboxListPanel({ activeThreadId, onSelectThread }) {
 
     return inboxThreads.filter((thread) => thread.unread);
   }, [activeFilter]);
+
+  const handleSelectThread = (threadId) => {
+    navigate(ROUTES.appThread(threadId));
+  };
 
   return (
     <Panel>
@@ -44,7 +51,7 @@ export default function InboxListPanel({ activeThreadId, onSelectThread }) {
           <ThreadRow
             key={thread.id}
             type="button"
-            onClick={() => onSelectThread(thread.id)}
+            onClick={() => handleSelectThread(thread.id)}
             $active={activeThreadId === thread.id}
           >
             <Avatar />

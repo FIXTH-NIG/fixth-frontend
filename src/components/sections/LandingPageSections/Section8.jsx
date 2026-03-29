@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import lpSection8Bg from "../../../assets/Images/lpSection8Bg.jpg"
 import { useNavigate } from 'react-router-dom'
+import { ROUTES } from "../../../routes"
 
 export default function Section8() {
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ export default function Section8() {
              getting direct messages and interviews from verified companies. 
              Sign up in under 60 seconds — it’s completely free.
         </span>
-        <button type="button" onClick={() => navigate('/signup')}>
+        <button type="button" onClick={() => navigate(ROUTES.signup)}>
             Sign Up
         </button>
     </Section8Container>

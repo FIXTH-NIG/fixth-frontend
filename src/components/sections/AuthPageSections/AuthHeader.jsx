@@ -1,22 +1,34 @@
-import React from 'react'
+﻿import React from 'react'
 import styled from 'styled-components'
+import { Link, useNavigate } from 'react-router-dom'
 import FixthLogo from "../../../assets/Icons/Fixth.svg"
 import back from "../../../assets/Icons/back.svg"
-import { useScreenWidth } from '../../../utils/useSreenWidth'
+import { useIsMobile } from '../../../hooks'
+import { BREAKPOINTS } from '../../../constants'
+import { ROUTES } from '../../../routes'
 
 export default function AuthHeader() {
-    const screenWidth = useScreenWidth()
+    const isMobile = useIsMobile(BREAKPOINTS.MOBILE)
+    const navigate = useNavigate()
+
+    const handleBack = () => {
+        navigate(-1)
+    }
   return (
         <AuthHeaderContainer>
             <div className="logoSec">
                 {
-                    screenWidth < 700 ? <img src={back} alt="Go back button" width={"25px"} height={"25px"} /> : null
+                    isMobile ? (
+                        <button type="button" onClick={handleBack} className="backBtn" aria-label="Go back">
+                            <img src={back} alt="Go back button" width={"25px"} height={"25px"} />
+                        </button>
+                    ) : null
                 }
                 <img src={FixthLogo} className='FixthLogo' alt="Fixth Logo" />
             </div>
             <div className="alternateInfo">
                 <span>Here to hire a talent? </span>
-                <a href="">Join as a company</a>
+                <Link to={ROUTES.signupChoose}>Join as a company</Link>
             </div>
         </AuthHeaderContainer>
   )
@@ -53,6 +65,14 @@ const AuthHeaderContainer = styled.header`
         @media (max-width: 700px){
             display: none;
         }
+    }
+    .backBtn{
+        background: transparent;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        padding: 0;
     }
 
 `

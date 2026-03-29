@@ -4,8 +4,9 @@ import FixthFLogo from '../../assets/Icons/FixthF-logo.svg'
 import xIcon from '../../assets/Icons/x.svg'
 import LinkedInIcon from '../../assets/Icons/linkedin.svg'
 import InstagramIcon from '../../assets/Icons/instagram.svg'
-import { useScreenWidth } from '../../utils/useSreenWidth'
+import { useScreenWidth } from '../../hooks'
 import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../../routes'
 
 // ─── Footer Component ─────────────────────────────────────────────────────────
 
@@ -44,10 +45,10 @@ export default function Footer() {
               <NavHeading>For students</NavHeading>
               <NavLinks>
                 <NavLink
-                  href="/signup"
+                  href={ROUTES.signup}
                   onClick={(event) => {
                     event.preventDefault();
-                    navigate('/signup');
+                    navigate(ROUTES.signup);
                   }}
                 >
                   Get Started Free

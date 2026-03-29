@@ -8,7 +8,7 @@ import ArrowLeftIcon from "../../../assets/Icons/leftArrowIcon.svg"
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from '../../../routes';
 
-// â”€â”€â”€ Styled Components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â”€â”€â”€ Styled Components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -308,44 +308,39 @@ const ContinueButton = styled.button`
   }
 `;
 
-// â”€â”€â”€ Section data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â”€â”€â”€ Section data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const sections = [
   {
-    title: 'Discipline',
-    description: 'Choose your engineering specialization',
-    buttonLabel: 'Add details',
-  },
-  {
     title: 'About',
-    description: 'Share some details about yourself, your expertise and what you offer.',
+    description: 'Tell engineers what they need to know about your company',
     buttonLabel: 'Add details',
   },
   {
-    title: 'Work experience',
-    description: 'Add your job history and achievement to give companies insights into your expertise.',
-    buttonLabel: 'Add work experience',
+    title: 'Industry',
+    description: 'Select the industry your company operates in to help engineers understand your core focus.',
+    buttonLabel: 'Add industry',
   },
   {
-    title: 'Education',
-    description: 'Add your job history and achievement to give companies insights into your expertise.',
-    buttonLabel: 'Add education',
+    title: 'Website',
+    description: 'Add your official website so engineers can learn more about your operations and projects.',
+    buttonLabel: 'Add link',
   },
   {
-    title: 'Skills',
-    description: 'Add your job history and achievement to give companies insights into your expertise.',
-    buttonLabel: 'Add education',
+    title: 'Employees',
+    description: 'Indicate your company size to give applicants an idea of your scale and structure.',
+    buttonLabel: 'Add employees',
   },
   {
-    title: 'Projects',
-    description: 'Add your project to catch the attention of your employer.',
-    buttonLabel: 'Add project',
+    title: 'Contact',
+    description: 'Provide a verified contact email for communication regarding applications and inquiries.',
+    buttonLabel: 'Add number',
   },
 ];
 
 // â”€â”€â”€ App â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-export default function EditProfile() {
+export default function EditProfileCompany() {
   const navigate = useNavigate();
 
   const handleBack = () => {

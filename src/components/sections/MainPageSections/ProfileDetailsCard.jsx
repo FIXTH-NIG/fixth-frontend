@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import plusIcon from "../../../assets/Icons/plusIcon.svg"
+import editIcon from "../../../assets/Icons/editPenIcon.svg"
 
 /* ── tokens ── */
 const BLACK = "rgba(31, 31, 31, 1)";
@@ -8,11 +10,10 @@ const ASH = "rgba(209, 209, 209, 1)";
 /* ── styled components ── */
 const Card = styled.div`
   width: 100%;
-  border-radius: 12px;
   border: 1px solid ${ASH};
   font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
   overflow: hidden;
-  background: var(--white);
+  background: var(--background-white);
 `;
 
 const Section = styled.div`
@@ -42,19 +43,19 @@ const SectionTitle = styled.h3`
 const HeaderIcons = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 31px;
 `;
 
 const IconButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
   border-radius: 6px;
-  border: 1px solid ${ASH};
-  background: transparent;
   cursor: pointer;
+  .plusIcon{
+    width: 14px;
+    height: 14px;
+  }
 `;
 
 const EntryRow = styled.div`
@@ -184,26 +185,7 @@ const ProjectListItem = styled.li`
   }
 `;
 
-/* ── icon components ── */
-const PlusIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-    <path d="M7 0V14" stroke={BLACK} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M0 7H14" stroke={BLACK} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
-const EditIcon = () => (
-  <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
-    <path d="M7.5 14H15.0001" stroke={BLACK} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path
-      d="M11.2501 0.50805C11.5816 0.182751 12.0313 0 12.5001 0C12.7322 0 12.9621 0.0448665 13.1766 0.132038C13.3911 0.219209 13.586 0.346978 13.7501 0.50805C13.9143 0.669121 14.0445 0.860341 14.1333 1.07079C14.2222 1.28124 14.2679 1.5068 14.2679 1.73459C14.2679 1.96238 14.2222 2.18794 14.1333 2.39839C14.0445 2.60884 13.9143 2.80006 13.7501 2.96113L3.3334 13.1823L0 14L0.8333 10.7292L11.2501 0.50805Z"
-      stroke={BLACK}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 /* ── main component ── */
 export default function ProfileDetailsCard({ onOpenModal }) {
@@ -215,10 +197,10 @@ export default function ProfileDetailsCard({ onOpenModal }) {
           <SectionTitle>Experience</SectionTitle>
           <HeaderIcons>
             <IconButton type="button" onClick={() => onOpenModal?.("experience")}>
-              <PlusIcon />
+              <img src={plusIcon} alt="plus icon" className="plusIcon"/>
             </IconButton>
             <IconButton type="button" onClick={() => onOpenModal?.("experience")}>
-              <EditIcon />
+              <img src={editIcon} alt="edit icon" />
             </IconButton>
           </HeaderIcons>
         </SectionHeader>
@@ -275,10 +257,10 @@ export default function ProfileDetailsCard({ onOpenModal }) {
           <SectionTitle>Education</SectionTitle>
           <HeaderIcons>
             <IconButton type="button" onClick={() => onOpenModal?.("education")}>
-              <PlusIcon />
+              <img src={plusIcon} alt="plusIcon" className="plusIcon" />
             </IconButton>
             <IconButton type="button" onClick={() => onOpenModal?.("education")}>
-              <EditIcon />
+              <img src={editIcon} alt="edit icon" />
             </IconButton>
           </HeaderIcons>
         </SectionHeader>
@@ -303,10 +285,10 @@ export default function ProfileDetailsCard({ onOpenModal }) {
           <SectionTitle>Skills</SectionTitle>
           <HeaderIcons>
             <IconButton type="button" onClick={() => onOpenModal?.("skills")}>
-              <PlusIcon />
+              <img src={plusIcon} alt="Plus icon" className="plusIcon" />
             </IconButton>
             <IconButton type="button" onClick={() => onOpenModal?.("skills")}>
-              <EditIcon />
+              <img src={editIcon} alt="Edit icon" />
             </IconButton>
           </HeaderIcons>
         </SectionHeader>
@@ -326,10 +308,10 @@ export default function ProfileDetailsCard({ onOpenModal }) {
           <SectionTitle>Projects</SectionTitle>
           <HeaderIcons>
             <IconButton type="button" onClick={() => onOpenModal?.("projects")}>
-              <PlusIcon />
+              <img src={plusIcon} alt="plus icon" className="plusIcon" />
             </IconButton>
             <IconButton type="button" onClick={() => onOpenModal?.("projects")}>
-              <EditIcon />
+              <img src={editIcon} alt="Edit icon" />
             </IconButton>
           </HeaderIcons>
         </SectionHeader>

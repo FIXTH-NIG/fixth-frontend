@@ -1,37 +1,20 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import styled from "styled-components";
 import dummyProfile from "../../../assets/Images/dummyProfile.png";
 import leftArrowIcon from "../../../assets/Icons/leftArrowIcon.svg";
+import greyCaseIcon from "../../../assets/Icons/greyCaseIcon.svg";
+import greyFoldIcon from "../../../assets/Icons/greyFoldIcon.svg";
+import greyLocationIcon from "../../../assets/Icons/greyLocationIcon.svg";
 import ProfileDetailsCard from "./ProfileDetailsCard";
 import PostCard from "../../ui/PostCard";
-
-const MODAL_TITLES = {
-  profile: "Create profile",
-  experience: "Add experience",
-  education: "Add education",
-  skills: "Add skills",
-  projects: "Add project",
-};
+import plusIcon from "../../../assets/Icons/plusIcon.svg"
+import { useModal } from "../../../hooks"
+import { MODAL_TITLES } from "../../../constants"
 
 export default function ProfileTab() {
-  const [activeModal, setActiveModal] = useState(null);
+  const [activeModal, setActiveModal, closeModal] = useModal();
 
   const modalTitle = useMemo(() => MODAL_TITLES[activeModal] || "", [activeModal]);
-
-  useEffect(() => {
-    if (!activeModal) {
-      return;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [activeModal]);
-
-  const closeModal = () => setActiveModal(null);
 
   return (
     <ProfileTabWrapper>
@@ -43,28 +26,47 @@ export default function ProfileTab() {
             <h2>John Doe</h2>
             <p>Final-year Civil Engineer passionate about sustainable infrastructure.</p>
             <InfoList>
-              <InfoItem>Civil/Structural Engineering</InfoItem>
-              <InfoItem>Redeemer&apos;s University</InfoItem>
-              <InfoItem>Oct 2022 - Oct 2027</InfoItem>
-              <InfoItem>Abuja, Nigeria</InfoItem>
+              <InfoItem> 
+                <img src={greyCaseIcon} alt="case icon" />
+                Civil/Structural Engineering
+              </InfoItem>
+              <InfoItem>
+                <img src={greyFoldIcon} alt="fold icon" />
+                Redeemer&apos;s University
+              </InfoItem>
+              <InfoItem>
+                <img src={greyLocationIcon} alt="location icon" />
+                Oct 2022 - Oct 2027
+              </InfoItem>
+              <InfoItem>
+                <img src={greyLocationIcon} alt="location icon" />
+                Abuja, Nigeria
+              </InfoItem>
             </InfoList>
             <MetaRow>
               <MetaItem>100+ networks</MetaItem>
-              <Dot />
-              <MetaItem>200 profile views</MetaItem>
             </MetaRow>
           </HeroText>
-          <EditButton type="button" onClick={() => setActiveModal("profile")}>
-            Edit profile
-          </EditButton>
+          <ActionArea>
+            <EditButton type="button" onClick={() => setActiveModal("profile")}>
+              Edit profile
+            </EditButton>
+            <ShareProfileButton type="button">
+              Share profile
+            </ShareProfileButton>
+          </ActionArea>
         </HeroContent>
+        <Post_or_Article>
+            <span>Post</span> 
+            <span>Article</span>
+        </Post_or_Article>
       </ProfileHero>
 
       <ProfileSection>
-        <SectionHeader>
+        {/* <SectionHeader>
           <h3>Posts</h3>
           <span>Show all posts</span>
-        </SectionHeader>
+        </SectionHeader> */}
         <PostCard />
         <PostCard />
       </ProfileSection>
@@ -109,8 +111,8 @@ function ExperienceForm() {
         <span>I am currently working on this role</span>
       </CheckboxRow>
       <TwoColumn>
-        <InputField placeholder="Start date" />
-        <InputField placeholder="End date" />
+        <InputField placeholder="Start date" type="date" />
+        <InputField placeholder="End date" type="date" />
       </TwoColumn>
       <InputField placeholder="Location" />
       <InputField placeholder="Location type" />
@@ -120,7 +122,10 @@ function ExperienceForm() {
       <HintText>
         We recommend adding your top 5 skills used in this role, they&apos;ll also appear in your skills section.
       </HintText>
-      <MiniButton type="button">+ Add skill</MiniButton>
+      <MiniButton type="button" > 
+        <img src={plusIcon} alt="plus icon" />
+         Add skill
+      </MiniButton>
     </FormGrid>
   );
 }
@@ -189,14 +194,12 @@ function ProfileForm() {
 const ProfileTabWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
   width: 100%;
   font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
 `;
 
 const ProfileHero = styled.section`
   width: 100%;
-  border-radius: 16px;
   border: 1px solid var(--light-ash);
   background: var(--background-white);
   overflow: hidden;
@@ -213,7 +216,6 @@ const HeroContent = styled.div`
   display: flex;
   gap: 16px;
   padding: 16px;
-  align-items: flex-start;
   @media (max-width: 600px) {
     flex-direction: column;
     align-items: flex-start;
@@ -225,18 +227,18 @@ const Avatar = styled.img`
   height: 72px;
   border-radius: 50%;
   border: 2px solid var(--background-white);
-  margin-top: -42px;
   object-fit: cover;
-  @media (max-width: 600px) {
-    margin-top: -36px;
-  }
+  position: absolute;
+  top: 80px;
+  left: 16px;
 `;
 
 const HeroText = styled.div`
+  margin-top: 40px;
   flex: 1;
   h2 {
     margin: 0;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--black);
     font-weight: 600;
     letter-spacing: -0.6px;
@@ -244,7 +246,7 @@ const HeroText = styled.div`
   p {
     margin: 6px 0 10px;
     color: var(--black);
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.4;
   }
 `;
@@ -281,6 +283,35 @@ const InfoItem = styled.span`
   color: var(--grey);
   font-size: 12px;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;
+const ActionArea = styled.div`
+  display: flex;
+  @media (max-width: 600px) {
+    width: 100%;
+    gap: 5px;
+    button{
+      width: 50%;
+    }
+  }
+
+`
+
+const ShareProfileButton  = styled.button`
+  background: var(--light-ash);
+  border-radius: 999px;
+  height: 32px;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+  white-space: nowrap;
+  display: none;
+  @media (max-width: 600px) {
+    display: block;
+  }
 `;
 
 const EditButton = styled.button`
@@ -292,12 +323,40 @@ const EditButton = styled.button`
   font-weight: 500;
   color: var(--black);
   white-space: nowrap;
+  @media (max-width: 600px) {
+    background-color: var(--blue);
+  }
 `;
+
+const Post_or_Article = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+  padding: 0 16px 16px;
+  margin: 0%;
+  padding: 0%;
+  @media (max-width: 600px) {
+    gap: 149px;
+  }
+  span {
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 39px;
+    height: 35px;
+    font-weight: 600;
+    color: var(--black);
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`
 
 const ProfileSection = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 12px;
 `;
 
 const SectionHeader = styled.div`
@@ -393,7 +452,7 @@ const InputField = styled.input`
   height: 38px;
   border-radius: 8px;
   border: 1px solid var(--light-ash);
-  background: #f1f1f1;
+  background:var(--background-white);
   padding: 0 12px;
   font-size: 12px;
   color: var(--black);
@@ -407,7 +466,7 @@ const TextArea = styled.textarea`
   width: 100%;
   border-radius: 8px;
   border: 1px solid var(--light-ash);
-  background: #f1f1f1;
+  background: var(--background-white);
   padding: 10px 12px;
   font-size: 12px;
   color: var(--black);
@@ -453,11 +512,14 @@ const HintText = styled.p`
 
 const MiniButton = styled.button`
   width: fit-content;
-  border-radius: 8px;
-  padding: 6px 10px;
-  background: var(--light-ash);
   font-size: 12px;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 4px;
+  margin-left: 10px;
 `;
 
 const ProfilePhotoRow = styled.div`

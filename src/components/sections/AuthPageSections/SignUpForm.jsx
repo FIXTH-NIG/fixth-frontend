@@ -1,18 +1,15 @@
-import React from 'react'
+﻿import React from 'react'
 import styled from 'styled-components'
 import apple from "../../../assets/Icons/apple.svg"
 import google from "../../../assets/Icons/google.svg"
 import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../../../routes'
 
-export default function SignUpForm({ onNext }) {
+export default function SignUpForm() {
   const navigate = useNavigate()
 
   const handleCreateAccount = () => {
-    if (onNext) {
-      onNext()
-      return
-    }
-    navigate('/app')
+    navigate(ROUTES.signupVerification)
   }
   return (
     <SignUpFormContainer>

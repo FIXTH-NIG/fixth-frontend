@@ -1,9 +1,17 @@
-import React from 'react'
+﻿import React from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 import caseIcon from "../../../assets/Icons/case.svg"
 import userIcon from "../../../assets/Icons/user.svg"
+import { ROUTES } from '../../../routes'
 
-export default function ChooseUserType({ onNext }) {
+export default function ChooseUserType() {
+    const navigate = useNavigate()
+
+    const handleContinue = () => {
+        navigate(ROUTES.signupSignUp)
+    }
+
     return (
         <ChooseUserTypeContainer>
             <h1 className="title">
@@ -15,18 +23,18 @@ export default function ChooseUserType({ onNext }) {
                         <img src={userIcon} alt="Brief case icon" />
                         <input type="radio" value={"student"} name='forStudent'/>
                     </div>
-                    <span>I’m a student looking for a job</span>
+                    <span>Iâ€™m a student looking for a job</span>
                 </div>
                 <div className="selector forCompany">
                     <div className="sec">
                         <img src={caseIcon} alt="Brief case icon" />
                         <input type="radio" value={"company"} name='forCompany'/>
                     </div>
-                    <span>I’m a company looking for talents</span>
+                    <span>Iâ€™m a company looking for talents</span>
                 </div>
             </div>
             <div className='container2'>
-                <button type="button" onClick={onNext}>
+                <button type="button" onClick={handleContinue}>
                     Apply as a company
                 </button>
                 <div>Already have an account? <a href="">Sign in</a></div>

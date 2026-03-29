@@ -1,4 +1,5 @@
 ﻿import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 import leftArrowIcon from '../../../../assets/Icons/leftArrowIcon.svg'
 
 const VerifiedIcon = () => (
@@ -31,16 +32,22 @@ const BookmarkIcon = () => (
   </svg>
 )
 
-export default function JobsDescription({ job, isMobile = false, onBack }) {
+export default function JobsDescription({ job, isMobile = false }) {
+  const navigate = useNavigate()
+
   if (!job) {
     return null
+  }
+
+  const handleBack = () => {
+    navigate('..', { relative: 'path' })
   }
 
   return (
     <DetailCard $mobile={isMobile}>
       {isMobile ? (
         <MobileHeader>
-          <button type="button" onClick={onBack} aria-label="go back to jobs list">
+          <button type="button" onClick={handleBack} aria-label="go back to jobs list">
             <img src={leftArrowIcon} alt="go back" />
           </button>
           <span>Jobs</span>
@@ -342,4 +349,3 @@ const CompanyDetailName = styled.div`
   align-items: center;
   gap: 4px;
 `
-

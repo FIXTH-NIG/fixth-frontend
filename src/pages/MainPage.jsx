@@ -1,130 +1,63 @@
-import { useMemo, useState } from "react"
+﻿import { useMemo } from "react"
+import { Outlet, useLocation, useParams } from "react-router-dom"
 import styled from "styled-components"
 import Sidebar from "../components/sections/MainPageSections/Sidebar"
 import ProfileSidebar from "../components/sections/MainPageSections/ProfileSideBar"
-import PostAndArticle from "../components/sections/MainPageSections/PostAndArticle"
-import { useScreenWidth } from "../utils/useSreenWidth"
+import { useIsMobile } from "../hooks"
 import MobileMenu from "../components/sections/MainPageSections/MobileMenu"
-import SectionPlaceholder from "../components/sections/MainPageSections/SectionPlaceholder"
-import JobsListPanel from "../components/sections/MainPageSections/jobs/JobsListPanel"
 import JobsDescription from "../components/sections/MainPageSections/jobs/jobsDescription"
-import ProfileTab from "../components/sections/MainPageSections/ProfileTab"
-import NotificationsTab from "../components/sections/MainPageSections/NotificationsTab"
-import InboxListPanel from "../components/sections/MainPageSections/inbox/InboxListPanel"
 import MessageThread from "../components/sections/MainPageSections/inbox/MessageThread"
-import { TAB_IDS } from "../components/sections/MainPageSections/navigationTabs"
-import { jobsData } from "../components/sections/MainPageSections/jobs/jobsData"
-import { inboxThreads } from "../components/sections/MainPageSections/inbox/inboxData"
+import { jobsData } from "../data/mock"
+import { inboxThreads } from "../data/mock"
+import { ROUTES } from "../routes"
+import { BREAKPOINTS } from "../constants/breakpoints"
 
 export default function MainPage() {
-    const screenWidth = useScreenWidth()
-    const isMobile = screenWidth < 750
-    const [activeTab, setActiveTab] = useState(TAB_IDS.home)
-    const [selectedJobId, setSelectedJobId] = useState(null)
-    const [showMobileJobDetail, setShowMobileJobDetail] = useState(false)
-    const [showDesktopJobDetail, setShowDesktopJobDetail] = useState(false)
-    const [selectedThreadId, setSelectedThreadId] = useState(null)
-    const [showMobileThread, setShowMobileThread] = useState(false)
-    const [showDesktopThread, setShowDesktopThread] = useState(false)
+    const isMobile = useIsMobile(BREAKPOINTS.TABLET)
+    const isTabletLarge = useIsMobile(BREAKPOINTS.TABLET_LARGE)
+    const location = useLocation()
+    const { jobId, threadId } = useParams()
 
     const selectedJob = useMemo(
-        () => jobsData.find((job) => job.id === selectedJobId) || null,
-        [selectedJobId]
+        () => jobsData.find((job) => job.id === jobId) || null,
+        [jobId]
     )
 
     const selectedThread = useMemo(
-        () => inboxThreads.find((thread) => thread.id === selectedThreadId) || null,
-        [selectedThreadId]
+        () => inboxThreads.find((thread) => thread.id === threadId) || null,
+        [threadId]
     )
 
-    const handleTabChange = (tabId) => {
-        setActiveTab(tabId)
-        if (tabId !== TAB_IDS.jobs) {
-            setShowMobileJobDetail(false)
-            setShowDesktopJobDetail(false)
-        }
-        if (tabId !== TAB_IDS.inbox) {
-            setShowMobileThread(false)
-            setShowDesktopThread(false)
-        }
-    }
+    const isJobsTab = location.pathname.startsWith(ROUTES.appJobs)
+    const isInboxTab = location.pathname.startsWith(ROUTES.appInbox)
+    const isNotificationsTab = location.pathname.startsWith(ROUTES.appNotifications)
 
-    const handleSelectJob = (jobId) => {
-        setSelectedJobId(jobId)
-        if (isMobile) {
-            setShowMobileJobDetail(true)
-            return
-        }
-        setShowDesktopJobDetail(true)
-    }
+    const hasJobDetail = Boolean(selectedJob)
+    const hasThreadDetail = Boolean(selectedThread)
 
-    const handleSelectThread = (threadId) => {
-        setSelectedThreadId(threadId)
-        if (isMobile) {
-            setShowMobileThread(true)
-            return
-        }
-        setShowDesktopThread(true)
-    }
+    const shouldHideMobileMenu =
+        isMobile &&
+        (isNotificationsTab ||
+            (isJobsTab && hasJobDetail) ||
+            (isInboxTab && hasThreadDetail))
 
-    const renderMainContent = () => {
-        switch (activeTab) {
-            case TAB_IDS.home:
-                return <PostAndArticle />
-            case TAB_IDS.jobs:
-                if (isMobile && showMobileJobDetail) {
-                    return <JobsDescription job={selectedJob} isMobile onBack={() => setShowMobileJobDetail(false)} />
-                }
-                return (
-                    <JobsListPanel
-                        jobs={jobsData}
-                        selectedJobId={selectedJobId}
-                        onSelectJob={handleSelectJob}
-                    />
-                )
-            case TAB_IDS.notifications:
-                return <NotificationsTab />
-            case TAB_IDS.inbox:
-                if (isMobile && showMobileThread) {
-                    return (
-                        <MessageThread
-                            thread={selectedThread}
-                            isMobile
-                            onBack={() => setShowMobileThread(false)}
-                        />
-                    )
-                }
-                return (
-                    <InboxListPanel
-                        activeThreadId={selectedThreadId}
-                        onSelectThread={handleSelectThread}
-                    />
-                )
-            case TAB_IDS.profile:
-                return <ProfileTab />
-            case TAB_IDS.settings:
-                return <SectionPlaceholder title="Settings" />
-            default:
-                return <PostAndArticle />
-        }
-    }
     return (
         <MainPageContainer>
             {
-                screenWidth < 850
+                isTabletLarge && !shouldHideMobileMenu
                     ?
-                    <MobileMenu activeTab={activeTab} onTabChange={handleTabChange} />
+                    <MobileMenu />
                     :
                     null
             }
-            <Sidebar activeTab={activeTab} onTabChange={handleTabChange} />
+            <Sidebar />
             <MidSection>
-                {renderMainContent()}
+                <Outlet />
             </MidSection>
             <RightSection>
-                {activeTab === TAB_IDS.jobs && !isMobile && showDesktopJobDetail ? (
+                {isJobsTab && hasJobDetail && !isMobile ? (
                     <JobsDescription job={selectedJob} />
-                ) : activeTab === TAB_IDS.inbox && !isMobile && showDesktopThread ? (
+                ) : isInboxTab && hasThreadDetail && !isMobile ? (
                     <MessageThread thread={selectedThread} />
                 ) : (
                     <ProfileSidebar />
@@ -142,6 +75,11 @@ const MainPageContainer = styled.div`
     justify-content: center;
     padding: 30px;
     position: relative;
+    height: 100dvh;
+    overflow: hidden;
+    align-items: flex-start;
+    @media (max-width: 850px){
+    }
     @media (max-width: 480px){
         gap: unset;
         padding: 0%;
@@ -151,6 +89,14 @@ const MainPageContainer = styled.div`
 
 const MidSection = styled.section`
     width: 485px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
     @media (max-width: 480px){
         width: 100%;
     }
@@ -161,4 +107,3 @@ const RightSection = styled.section`
         display: none;
     }
 `
-

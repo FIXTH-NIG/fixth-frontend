@@ -10,8 +10,9 @@ import faq3 from "../../../assets/Images/faq3.svg"
 import faq4 from "../../../assets/Images/faq4.svg"
 import bgGreaterThan from "../../../assets/Icons/bgGreaterThan.svg"
 import bgLessThan from "../../../assets/Icons/bgLessThan.svg"   
-import { useScreenWidth } from "../../../utils/useSreenWidth";
-import { useNavigate } from "react-router-dom";
+import { useScreenWidth } from '../../../hooks';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../../routes';
 
 const BoxWrapper = styled.div`
   height: auto;
@@ -157,7 +158,7 @@ export default function Section7() {
             <GetStarted
               className="get-started"
               type="button"
-              onClick={() => navigate('/signup')}
+              onClick={() => navigate(ROUTES.signup)}
             >
               Get Started ↗
             </GetStarted>

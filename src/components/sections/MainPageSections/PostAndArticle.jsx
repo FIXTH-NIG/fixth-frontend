@@ -10,7 +10,8 @@ import xIcon from '../../../assets/Icons/cancelIcon.svg'
 import mediaIcon from "../../../assets/Icons/blackMediaIcon.svg"
 
 import leftArrowIcon from '../../../assets/Icons/leftArrowIcon.svg'
-import { useScreenWidth } from '../../../utils/useSreenWidth'
+import { useIsMobile } from '../../../hooks'
+import { BREAKPOINTS, NOTIFICATION_TIMEOUT } from '../../../constants'
 
 const COMPOSER_CONFIG = {
     post: {
@@ -26,8 +27,7 @@ const COMPOSER_CONFIG = {
 }
 
 export default function PostAndArticle() {
-    const screenWidth = useScreenWidth()
-    const isMobile = screenWidth < 850
+    const isMobile = useIsMobile(BREAKPOINTS.TABLET_LARGE)
     const [newPost, setNewPost] = useState(false)
     const [isDesktopPickerOpen, setDesktopPickerOpen] = useState(false)
     const [isMobilePickerOpen, setMobilePickerOpen] = useState(false)
@@ -84,7 +84,7 @@ export default function PostAndArticle() {
 
         const timer = setTimeout(() => {
             setNewPost(false)
-        }, 2500)
+        }, NOTIFICATION_TIMEOUT)
 
         return () => clearTimeout(timer)
     }, [newPost])

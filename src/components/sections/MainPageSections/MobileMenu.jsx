@@ -1,4 +1,5 @@
 ﻿import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 import homeIcon from '../../../assets/Icons/homeIcon.svg'
 import caseIcon from '../../../assets/Icons/case.svg'
 import inboxIcon from '../../../assets/Icons/inboxIcon.svg'
@@ -11,15 +12,14 @@ const iconMap = {
   inbox: inboxIcon,
 }
 
-export default function MobileMenu({ activeTab, onTabChange }) {
+export default function MobileMenu() {
   return (
     <MobileMenuWrap>
       {MOBILE_TABS.map((tab) => (
         <MenuItem
           key={tab.id}
-          type="button"
-          onClick={() => onTabChange(tab.id)}
-          $active={tab.id === activeTab}
+          to={tab.to}
+          className={({ isActive }) => (isActive ? 'active' : '')}
         >
           {tab.icon === 'profile' ? (
             <img src={dummyPP} alt="profile tab" width="22" height="22" />
@@ -34,6 +34,7 @@ export default function MobileMenu({ activeTab, onTabChange }) {
 }
 
 const MobileMenuWrap = styled.section`
+  outline: 2px red;
   height: 69px;
   background-color: var(--white);
   position: fixed;
@@ -51,13 +52,18 @@ const MobileMenuWrap = styled.section`
   }
 `
 
-const MenuItem = styled.button`
+const MenuItem = styled(NavLink)`
   display: flex;
   flex-direction: column;
   gap: 6px;
   font-size: 12px;
   align-items: center;
-  color: ${({ $active }) => ($active ? 'var(--blue)' : 'var(--black)')};
-  font-weight: ${({ $active }) => ($active ? '600' : '500')};
-`
+  color: var(--black);
+  font-weight: 500;
+  text-decoration: none;
 
+  &.active {
+    color: var(--blue);
+    font-weight: 600;
+  }
+`

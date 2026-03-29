@@ -5,11 +5,13 @@ import FixthLogo from '../../assets/Icons/Fixth.svg';
 import FLogo from '../../assets/Icons/FixthF-logo.svg';
 import Hamburger from '../../assets/Icons/Hamburger.svg';
 import closeIcon from '../../assets/Icons/close.svg';
-import { useScreenWidth } from '../../utils/useSreenWidth';
+import { useIsMobile } from '../../hooks';
+import { BREAKPOINTS } from '../../constants';
 import studentNavImage from '../../assets/Images/studentNavImage.svg';
 import companyNavImage from '../../assets/Images/companyNavImage.svg';
 import jobsNavImage from '../../assets/Images/jobsNavImage.svg';
 import communityNavImage from '../../assets/Images/communityNavImage.svg';
+import { ROUTES } from '../../routes';
 
 const TAB_DISPLAY = [
   {
@@ -78,9 +80,8 @@ function NavTabCard({ item, onCtaClick }) {
 }
 
 export default function Header() {
-  const screenWidth = useScreenWidth();
+  const isMobile = useIsMobile(BREAKPOINTS.DESKTOP_SMALL);
   const navigate = useNavigate();
-  const isMobile = screenWidth <= 1024;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDesktopTab, setActiveDesktopTab] = useState(null);
 
@@ -95,7 +96,7 @@ export default function Header() {
   };
 
   const goToSignup = () => {
-    navigate('/signup');
+    navigate(ROUTES.signup);
   };
 
   useEffect(() => {
@@ -126,7 +127,7 @@ export default function Header() {
       )}
       <HeaderShell>
         <HeaderContainer>
-          {screenWidth > 1024 ? (
+          {!isMobile ? (
             <>
               <img src={FixthLogo} alt="Fixth Logo" />
               <NabBtns>

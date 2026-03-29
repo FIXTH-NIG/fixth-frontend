@@ -1,5 +1,7 @@
-import { useState, useRef } from 'react';
+﻿import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { ROUTES } from '../../../routes';
 
 const PageWrapper = styled.div`
   background: rgba(228, 228, 228, 1);
@@ -159,9 +161,10 @@ const DifferentEmailLink = styled.button`
 
 const OTP_LENGTH = 6;
 
-export default function VerificationCode({ onNext, onBack }) {
+export default function VerificationCode() {
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(''));
   const inputRefs = useRef([]);
+  const navigate = useNavigate();
 
   const handleChange = (index, e) => {
     const val = e.target.value.replace(/\D/g, '').slice(-1);
@@ -190,19 +193,16 @@ export default function VerificationCode({ onNext, onBack }) {
   };
 
   const handleVerify = () => {
-    const code = otp.join('');
-    if (onNext) {
-      onNext();
-      return;
-    }
-    if (code.length === OTP_LENGTH) {
-      alert(`Verifying code: ${code}`);
-    }
+    navigate(ROUTES.signupAddExperience);
   };
 
   const handleResend = () => {
     setOtp(Array(OTP_LENGTH).fill(''));
     inputRefs.current[0]?.focus();
+  };
+
+  const handleUseDifferentEmail = () => {
+    navigate(ROUTES.signupSignUp);
   };
 
   return (
@@ -239,11 +239,10 @@ export default function VerificationCode({ onNext, onBack }) {
           </ResendText>
         </ActionsGroup>
 
-        <DifferentEmailLink type="button" onClick={onBack}>
+        <DifferentEmailLink type="button" onClick={handleUseDifferentEmail}>
           Use a different email
         </DifferentEmailLink>
       </Card>
     </PageWrapper>
   );
 }
-

@@ -1,13 +1,20 @@
 ﻿import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 import SearchBox from '../../../ui/SearchBox'
 import JobListingCard from '../../../ui/JobListingCard'
+import { ROUTES } from '../../../../routes'
 
 export default function JobsListPanel({
   jobs,
   selectedJobId,
-  onSelectJob,
   showSearch = true,
 }) {
+  const navigate = useNavigate()
+
+  const handleSelectJob = (jobId) => {
+    navigate(ROUTES.appJob(jobId))
+  }
+
   return (
     <JobsListWrapper>
       {showSearch ? <SearchBox width="100%" /> : null}
@@ -24,7 +31,7 @@ export default function JobsListPanel({
               key={job.id}
               job={job}
               isActive={job.id === selectedJobId}
-              onSelect={() => onSelectJob(job.id)}
+              onSelect={() => handleSelectJob(job.id)}
             />
           ))}
         </Rows>
@@ -81,4 +88,3 @@ const ViewMoreButton = styled.button`
   font-size: 14px;
   font-weight: 500;
 `
-

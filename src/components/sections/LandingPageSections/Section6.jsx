@@ -3,11 +3,12 @@ import styled from "styled-components";
 import dextopJohn from "../../../assets/Images/dextopJohn.svg"
 import mobileJohn from "../../../assets/Images/mobileJohn.svg"
 import greaterThan from "../../../assets/Icons/greaterThan.svg"
-import { useScreenWidth } from '../../../utils/useSreenWidth';
+import { useScreenWidth } from '../../../hooks';
+import { BREAKPOINTS } from '../../../constants';
 
 export default function Section6() {
     const screenWidth = useScreenWidth();
-     const johnImage = screenWidth > 700 ? dextopJohn : mobileJohn;
+     const johnImage = screenWidth > BREAKPOINTS.MOBILE ? dextopJohn : mobileJohn;
   return (
     <Section6Container>
         <h2 className="title">
