@@ -1,16 +1,46 @@
-﻿import React from 'react'
+﻿import React, { useState } from 'react'
 import styled from 'styled-components'
 import apple from "../../../assets/Icons/apple.svg"
 import google from "../../../assets/Icons/google.svg"
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../../routes'
+import { useAuth } from '../../../hooks'
 
 export default function SignUpForm() {
   const navigate = useNavigate()
+  const { signup, accountType } = useAuth()
+  const [fullname, setFullname] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
+  const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleCreateAccount = () => {
-    navigate(ROUTES.signupVerification)
+  const handleCreateAccount = async (event) => {
+    event.preventDefault()
+    setError('')
+
+    if (!fullname || !email || !password) {
+      setError('Please fill in all fields.')
+      return
+    }
+
+    if (!acceptedTerms) {
+      setError('Please accept the terms and conditions.')
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      await signup({ fullname, email, password, type: accountType })
+      navigate(ROUTES.signupVerification)
+    } catch (err) {
+      setError(err?.message || 'Unable to create account. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
+
   return (
     <SignUpFormContainer>
         <div className="sec1">
@@ -33,20 +63,43 @@ export default function SignUpForm() {
             <span>_______________</span> or <span>_______________</span>
         </div>
         <div className="inputSec">
-            <form action="">
-                <input type="text"  placeholder='Fullname'/>
-                <input type="text" placeholder='Work Email' />
-                <input type="text" placeholder='Password' />
+            <form onSubmit={handleCreateAccount}>
+                <input
+                  type="text"
+                  placeholder='Fullname'
+                  value={fullname}
+                  onChange={(e) => setFullname(e.target.value)}
+                />
+                <input
+                  type="email"
+                  placeholder='Work Email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder='Password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? 'Creating account...' : 'Create account'}
+                </button>
             </form>
             <div className="termsAndCondition">
-                <input type="checkbox" id='termsAndCondition' name='termsAndCondition' value={"yes"} />
+                <input
+                  type="checkbox"
+                  id='termsAndCondition'
+                  name='termsAndCondition'
+                  value="yes"
+                  checked={acceptedTerms}
+                  onChange={(e) => setAcceptedTerms(e.target.checked)}
+                />
                 <span>By registering you agree with our terms & conditions</span>
             </div>
-            <button type="button" onClick={handleCreateAccount}>
-                Create account
-            </button>
+            {error ? <div className="formError">{error}</div> : null}
             <div className="alreadyHaveAnAcc">
-                Already have an account? <a href="">Sign in</a>
+                Already have an account? <Link to={ROUTES.signupSignIn}>Sign in</Link>
             </div>
         </div>
     </SignUpFormContainer>
@@ -138,6 +191,22 @@ const SignUpFormContainer = styled.section`
                 background-color: var(--background-white);
                 border-radius: 8px;
             }
+            button{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 36px;
+                background-color: var(--blue);
+                color: var(--background-white);
+                font-size: 14px;
+                border-radius: 10px;
+                opacity: 1;
+                &:disabled{
+                    opacity: 0.7;
+                    cursor: not-allowed;
+                }
+            }
         }
         .termsAndCondition{
             display: flex;
@@ -158,16 +227,10 @@ const SignUpFormContainer = styled.section`
                 }
             }
         }
-        button{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 36px;
-            background-color: var(--blue);
-            color: var(--background-white);
-            font-size: 14px;
-            border-radius: 10px;
+        .formError{
+            color: #c0392b;
+            font-size: 12px;
+            text-align: center;
         }
         .alreadyHaveAnAcc{
             font-size: 12px;

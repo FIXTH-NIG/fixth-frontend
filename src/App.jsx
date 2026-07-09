@@ -4,6 +4,7 @@ import AuthPage from "./pages/AuthPage"
 import MainPage from "./pages/MainPage"
 import ChooseUserType from "./components/sections/AuthPageSections/ChooseUserType"
 import SignUpForm from "./components/sections/AuthPageSections/SignUpForm"
+import SignInForm from "./components/sections/AuthPageSections/SignInForm"
 import VerificationCode from "./components/sections/AuthPageSections/VericationCode"
 import AddExperience from "./components/sections/AuthPageSections/AddExperience"
 import EditProfile from "./components/sections/AuthPageSections/EditProfile"
@@ -14,6 +15,7 @@ import ProfileTab from "./components/sections/MainPageSections/ProfileTab"
 import SectionPlaceholder from "./components/sections/MainPageSections/SectionPlaceholder"
 import { JobsTab, InboxTab } from "./pages/MainPageTabs"
 import { ROUTES } from "./routes"
+import RequireAuth from "./components/auth/RequireAuth"
 
 function App() {
 
@@ -26,13 +28,21 @@ function App() {
           <Route index element={<Navigate to="choose-user-type" replace />} />
           <Route path="choose-user-type" element={<ChooseUserType />} />
           <Route path="sign-up" element={<SignUpForm />} />
+          <Route path="sign-in" element={<SignInForm />} />
           <Route path="verification-code" element={<VerificationCode />} />
           <Route path="add-experience" element={<AddExperience />} />
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="edit-profile-company" element={<EditProfileCompany />} />
         </Route>
 
-        <Route path={ROUTES.app} element={<MainPage />}>
+        <Route
+          path={ROUTES.app}
+          element={
+            <RequireAuth>
+              <MainPage />
+            </RequireAuth>
+          }
+        >
           <Route index element={<Navigate to="home" replace />} />
           <Route path="home" element={<PostAndArticle />} />
           <Route path="jobs" element={<JobsTab />} />

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(npm install:*)",
+      "Bash(\"/mnt/c/Users/ogund/Documents/Important stuffs/GIGS/fixth/fixth-jobs/node_modules/.bin/vite\" --version)",
+      "Bash(xxd)"
+    ]
+  }
+}

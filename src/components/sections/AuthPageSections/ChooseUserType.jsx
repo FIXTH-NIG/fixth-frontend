@@ -1,16 +1,26 @@
-﻿import React from 'react'
+﻿import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import caseIcon from "../../../assets/Icons/case.svg"
 import userIcon from "../../../assets/Icons/user.svg"
 import { ROUTES } from '../../../routes'
+import { useAuth } from '../../../hooks'
 
 export default function ChooseUserType() {
     const navigate = useNavigate()
+    const { accountType, setAccountType } = useAuth()
+    const [selectedType, setSelectedType] = useState(accountType || 'student')
 
     const handleContinue = () => {
+        setAccountType(selectedType)
         navigate(ROUTES.signupSignUp)
     }
+
+    useEffect(() => {
+        if (!accountType) {
+            setAccountType(selectedType)
+        }
+    }, [accountType, selectedType, setAccountType])
 
     return (
         <ChooseUserTypeContainer>
@@ -21,23 +31,35 @@ export default function ChooseUserType() {
                 <div className="selector forStudent">
                     <div className="sec">
                         <img src={userIcon} alt="Brief case icon" />
-                        <input type="radio" value={"student"} name='forStudent'/>
+                        <input
+                            type="radio"
+                            value="student"
+                            name='accountType'
+                            checked={selectedType === 'student'}
+                            onChange={() => setSelectedType('student')}
+                        />
                     </div>
-                    <span>Iâ€™m a student looking for a job</span>
+                    <span>I'm a student looking for a job</span>
                 </div>
                 <div className="selector forCompany">
                     <div className="sec">
                         <img src={caseIcon} alt="Brief case icon" />
-                        <input type="radio" value={"company"} name='forCompany'/>
+                        <input
+                            type="radio"
+                            value="company"
+                            name='accountType'
+                            checked={selectedType === 'company'}
+                            onChange={() => setSelectedType('company')}
+                        />
                     </div>
-                    <span>Iâ€™m a company looking for talents</span>
+                    <span>I'm a company looking for talents</span>
                 </div>
             </div>
             <div className='container2'>
                 <button type="button" onClick={handleContinue}>
-                    Apply as a company
+                    Continue
                 </button>
-                <div>Already have an account? <a href="">Sign in</a></div>
+                <div>Already have an account? <Link to={ROUTES.signupSignIn}>Sign in</Link></div>
             </div>
         </ChooseUserTypeContainer>
     )

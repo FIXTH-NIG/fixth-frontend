@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ROUTES } from '../../../routes';
+import { useAuth } from '../../../hooks';
 
 const PageWrapper = styled.div`
   background: rgba(228, 228, 228, 1);
@@ -120,9 +121,15 @@ const VerifyButton = styled.button`
   font-size: 15px;
   font-weight: 500;
   letter-spacing: -0.45px;
+  opacity: 1;
 
   &:hover {
     background: rgba(60, 90, 160, 1);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 `;
 
@@ -159,12 +166,24 @@ const DifferentEmailLink = styled.button`
   padding: 0;
 `;
 
+const FormMessage = styled.p`
+  color: ${props => props.$error ? '#c0392b' : '#2c3e50'};
+  font-size: 12px;
+  margin: 12px 0 0;
+  text-align: center;
+`;
+
 const OTP_LENGTH = 6;
 
 export default function VerificationCode() {
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(''));
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isResending, setIsResending] = useState(false);
   const inputRefs = useRef([]);
   const navigate = useNavigate();
+  const { pendingEmail, verifyOtp, resendVerification } = useAuth();
 
   const handleChange = (index, e) => {
     const val = e.target.value.replace(/\D/g, '').slice(-1);
@@ -192,13 +211,54 @@ export default function VerificationCode() {
     inputRefs.current[nextEmpty === -1 ? OTP_LENGTH - 1 : nextEmpty]?.focus();
   };
 
-  const handleVerify = () => {
-    navigate(ROUTES.signupAddExperience);
+  const handleVerify = async () => {
+    setError('');
+    setMessage('');
+
+    if (!pendingEmail) {
+      setError('Please go back and enter your email first.');
+      return;
+    }
+
+    const code = otp.join('');
+    if (code.length < OTP_LENGTH) {
+      setError('Please enter the full verification code.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await verifyOtp({ email: pendingEmail, code });
+      const profileComplete = response?.profile_complete ?? response?.profileComplete;
+      const nextRoute = profileComplete === false ? ROUTES.signupAddExperience : ROUTES.appHome;
+      navigate(nextRoute);
+    } catch (err) {
+      setError(err?.message || 'Verification failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleResend = () => {
-    setOtp(Array(OTP_LENGTH).fill(''));
-    inputRefs.current[0]?.focus();
+  const handleResend = async () => {
+    setError('');
+    setMessage('');
+
+    if (!pendingEmail) {
+      setError('Please go back and enter your email first.');
+      return;
+    }
+
+    setIsResending(true);
+    try {
+      await resendVerification({ email: pendingEmail });
+      setOtp(Array(OTP_LENGTH).fill(''));
+      inputRefs.current[0]?.focus();
+      setMessage('A new code has been sent to your email.');
+    } catch (err) {
+      setError(err?.message || 'Unable to resend code. Please try again.');
+    } finally {
+      setIsResending(false);
+    }
   };
 
   const handleUseDifferentEmail = () => {
@@ -212,7 +272,7 @@ export default function VerificationCode() {
           <Title>Confirm your email</Title>
           <Subtitle>
             <SubtitleGray>Enter the verification code we sent to </SubtitleGray>
-            <SubtitleDark>vwegbaeminokanju@gmail.com</SubtitleDark>
+            <SubtitleDark>{pendingEmail || 'your email'}</SubtitleDark>
           </Subtitle>
         </HeaderGroup>
 
@@ -232,11 +292,17 @@ export default function VerificationCode() {
         </OtpRow>
 
         <ActionsGroup>
-          <VerifyButton onClick={handleVerify}>Verify</VerifyButton>
+          <VerifyButton onClick={handleVerify} disabled={isSubmitting}>
+            {isSubmitting ? 'Verifying...' : 'Verify'}
+          </VerifyButton>
           <ResendText>
-            Didn&apos;t receive code?{' '}
-            <ResendLink onClick={handleResend}>Resend OTP</ResendLink>
+            Didn't receive code?{' '}
+            <ResendLink onClick={handleResend} disabled={isResending}>
+              {isResending ? 'Sending...' : 'Resend OTP'}
+            </ResendLink>
           </ResendText>
+          {error ? <FormMessage $error>{error}</FormMessage> : null}
+          {message ? <FormMessage>{message}</FormMessage> : null}
         </ActionsGroup>
 
         <DifferentEmailLink type="button" onClick={handleUseDifferentEmail}>

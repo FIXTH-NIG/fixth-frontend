@@ -3,6 +3,7 @@
   signup: '/signup',
   signupChoose: '/signup/choose-user-type',
   signupSignUp: '/signup/sign-up',
+  signupSignIn: '/signup/sign-in',
   signupVerification: '/signup/verification-code',
   signupAddExperience: '/signup/add-experience',
   signupEditProfile: '/signup/edit-profile',
