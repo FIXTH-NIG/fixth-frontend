@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Instrument+Sans:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-primary-blue: #0f35db;
+  --color-black: #030303;
+  --color-primary-grey: #7b7b7b;
+  --color-light-ash: #e4e4e4;
+  --color-off-white: #f3f3f3;
+  --color-grey: #b9b9b9;
+  --color-error-red: #e33629;
+
+  --font-heading: 'Poppins', sans-serif;
+  --font-sans: 'Instrument Sans', sans-serif;
+
+  --radius-card: 40px;
+  --radius-control: 20px;
+  --radius-pill: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-off-white);
+  color: var(--color-black);
+}
