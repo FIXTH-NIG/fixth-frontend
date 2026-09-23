@@ -19,12 +19,34 @@ import StudentLocationSharing from './pages/onboarding/StudentLocationSharing'
 import OrgDetails from './pages/onboarding/OrgDetails'
 import OrgVerification from './pages/onboarding/OrgVerification'
 import OnboardingComplete from './pages/onboarding/OnboardingComplete'
+import StudentHome from './pages/student/StudentHome'
+import StudentProfilePage from './pages/student/StudentProfile'
+import StudentEditProfile from './pages/student/StudentEditProfile'
+import OpportunityDetail from './pages/student/OpportunityDetail'
+import StudentApplications from './pages/student/StudentApplications'
+import StudentNotifications from './pages/student/StudentNotifications'
+import StudentSettings from './pages/student/StudentSettings'
+import StudentAddProject from './pages/student/StudentAddProject'
+import ProjectDetail from './pages/student/ProjectDetail'
+import StudentApply from './pages/student/StudentApply'
+import ApplySuccess from './pages/student/ApplySuccess'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/student/signup" replace />} />
+        <Route path="student/home" element={<StudentHome />} />
+        <Route path="student/profile" element={<StudentProfilePage />} />
+        <Route path="student/profile/edit" element={<StudentEditProfile />} />
+        <Route path="student/opportunities/:opportunityId" element={<OpportunityDetail />} />
+        <Route path="student/applications" element={<StudentApplications />} />
+        <Route path="student/notifications" element={<StudentNotifications />} />
+        <Route path="student/settings" element={<StudentSettings />} />
+        <Route path="student/projects/new" element={<StudentAddProject />} />
+        <Route path="student/projects/:projectId" element={<ProjectDetail />} />
+        <Route path="student/apply" element={<StudentApply />} />
+        <Route path="student/apply/success" element={<ApplySuccess />} />
         <Route path=":userType" element={<UserTypeGate />}>
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
