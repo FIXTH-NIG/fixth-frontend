@@ -30,6 +30,27 @@ import StudentAddProject from './pages/student/StudentAddProject'
 import ProjectDetail from './pages/student/ProjectDetail'
 import StudentApply from './pages/student/StudentApply'
 import ApplySuccess from './pages/student/ApplySuccess'
+import OrgHome from './pages/organization/OrgHome'
+import OrgProfile from './pages/organization/OrgProfile'
+import OrgEditProfile from './pages/organization/OrgEditProfile'
+import OrgApplicants from './pages/organization/OrgApplicants'
+import OrgStudentView from './pages/organization/OrgStudentView'
+import OrgPlacementDetail from './pages/organization/OrgPlacementDetail'
+import OrgAddPlacement from './pages/organization/OrgAddPlacement'
+import OrgProjectView from './pages/organization/OrgProjectView'
+import OrgNotifications from './pages/organization/OrgNotifications'
+import OrgSettings from './pages/organization/OrgSettings'
+import AdminHome from './pages/admin/AdminHome'
+import AdminStudents from './pages/admin/AdminStudents'
+import AdminOrganizations from './pages/admin/AdminOrganizations'
+import AdminPlacements from './pages/admin/AdminPlacements'
+import AdminAdmins from './pages/admin/AdminAdmins'
+import AdminAddAdmin from './pages/admin/AdminAddAdmin'
+import AdminEditProfile from './pages/admin/AdminEditProfile'
+import AdminSettings from './pages/admin/AdminSettings'
+import AdminChangePassword from './pages/admin/AdminChangePassword'
+import AdminForgotPassword from './pages/admin/AdminForgotPassword'
+import AdminCheckInbox from './pages/admin/AdminCheckInbox'
 
 export default function App() {
   return (
@@ -47,6 +68,63 @@ export default function App() {
         <Route path="student/projects/:projectId" element={<ProjectDetail />} />
         <Route path="student/apply" element={<StudentApply />} />
         <Route path="student/apply/success" element={<ApplySuccess />} />
+        <Route path="organization/home" element={<OrgHome />} />
+        <Route path="organization/profile" element={<OrgProfile />} />
+        <Route path="organization/profile/edit" element={<OrgEditProfile />} />
+        <Route path="organization/applicants" element={<OrgApplicants />} />
+        <Route path="organization/students/:studentId" element={<OrgStudentView />} />
+        <Route path="organization/placements/new" element={<OrgAddPlacement />} />
+        <Route path="organization/placements/:placementId" element={<OrgPlacementDetail />} />
+        <Route path="organization/projects/:projectId" element={<OrgProjectView />} />
+        <Route path="organization/notifications" element={<OrgNotifications />} />
+        <Route path="organization/settings" element={<OrgSettings />} />
+        <Route path="admin/home" element={<AdminHome />} />
+        <Route path="admin/students" element={<AdminStudents />} />
+        <Route path="admin/organizations" element={<AdminOrganizations />} />
+        <Route path="admin/placements" element={<AdminPlacements />} />
+        <Route path="admin/admins" element={<AdminAdmins />} />
+        <Route path="admin/admins/new" element={<AdminAddAdmin />} />
+        <Route path="admin/profile/edit" element={<AdminEditProfile />} />
+        <Route path="admin/settings" element={<AdminSettings />} />
+        <Route path="admin/change-password" element={<AdminChangePassword />} />
+        <Route path="admin/forgot-password" element={<AdminForgotPassword />} />
+        <Route path="admin/check-inbox" element={<AdminCheckInbox />} />
+        <Route
+          path="staff/home"
+          element={<AdminHome role="Admin" basePath="/staff" showAdmins={false} />}
+        />
+        <Route
+          path="staff/students"
+          element={<AdminStudents role="Admin" basePath="/staff" showAdmins={false} />}
+        />
+        <Route
+          path="staff/organizations"
+          element={<AdminOrganizations role="Admin" basePath="/staff" showAdmins={false} />}
+        />
+        <Route
+          path="staff/placements"
+          element={<AdminPlacements role="Admin" basePath="/staff" showAdmins={false} />}
+        />
+        <Route
+          path="staff/profile/edit"
+          element={<AdminEditProfile role="Admin" basePath="/staff" showAdmins={false} />}
+        />
+        <Route
+          path="staff/settings"
+          element={<AdminSettings role="Admin" basePath="/staff" showAdmins={false} />}
+        />
+        <Route
+          path="staff/change-password"
+          element={<AdminChangePassword role="Admin" basePath="/staff" showAdmins={false} />}
+        />
+        <Route
+          path="staff/forgot-password"
+          element={<AdminForgotPassword role="Admin" basePath="/staff" showAdmins={false} />}
+        />
+        <Route
+          path="staff/check-inbox"
+          element={<AdminCheckInbox role="Admin" basePath="/staff" showAdmins={false} />}
+        />
         <Route path=":userType" element={<UserTypeGate />}>
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />

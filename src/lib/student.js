@@ -109,6 +109,16 @@ export const PROJECTS = [
     title: 'SWEP Woodwork Project',
     shortDescription: 'I experimented with woodwork apparatus and learnt alot',
   },
+  {
+    id: 'swep-woodwork-2',
+    title: 'SWEP Woodwork Project',
+    shortDescription: 'I experimented with woodwork apparatus and learnt alot',
+  },
+  {
+    id: 'swep-woodwork-3',
+    title: 'SWEP Woodwork Project',
+    shortDescription: 'I experimented with woodwork apparatus and learnt alot',
+  },
 ]
 
 export const PROJECT_DETAIL = {

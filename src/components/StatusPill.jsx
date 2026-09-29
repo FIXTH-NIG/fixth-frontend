@@ -4,6 +4,13 @@ const STYLES = {
   Shortlisted: { box: 'bg-[rgba(242,234,31,0.1)] w-[68px]', text: 'text-[#b2ae3a]' },
   Rejected: { box: 'bg-[rgba(227,54,41,0.1)]', text: 'text-error-red' },
   Accepted: { box: 'bg-[rgba(39,149,67,0.1)]', text: 'text-success-green' },
+  Verified: { box: 'bg-[rgba(39,149,67,0.1)]', text: 'text-success-green' },
+  Pending: { box: 'bg-light-ash', text: 'text-primary-grey' },
+  Suspended: { box: 'bg-[rgba(227,54,41,0.1)]', text: 'text-error-red' },
+  Live: { box: 'bg-[rgba(39,149,67,0.1)]', text: 'text-success-green' },
+  Removed: { box: 'bg-[rgba(227,54,41,0.1)]', text: 'text-error-red' },
+  Open: { box: 'bg-[rgba(39,149,67,0.1)]', text: 'text-success-green' },
+  Close: { box: 'bg-[rgba(227,54,41,0.1)]', text: 'text-error-red' },
 }
 
 export default function StatusPill({ status }) {
