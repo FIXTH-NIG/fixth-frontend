@@ -2,7 +2,12 @@ import { useRef, useState } from 'react'
 import uploadCloud from '../assets/icons/upload-cloud.svg'
 import closeX from '../assets/icons/close-x.svg'
 
-export default function StudentDocUpload({ label, initialFile = null }) {
+export default function StudentDocUpload({
+  label,
+  initialFile = null,
+  dropTitle = 'Upload your document',
+  dropSubtitle = null,
+}) {
   const inputRef = useRef(null)
   const [file, setFile] = useState(initialFile)
   const [dragging, setDragging] = useState(false)
@@ -44,12 +49,16 @@ export default function StudentDocUpload({ label, initialFile = null }) {
         >
           <img src={uploadCloud} alt="" className="size-[38px]" />
           <div className="flex flex-col items-center justify-center gap-[2px] text-center">
-            <p className="text-[16px] tracking-[-0.48px] text-black">Upload your document</p>
-            <p className="text-center text-[11px] tracking-[-0.33px] text-primary-grey">
-              Acceptable formats: PDF, DOC, DOCX.
-              <br />
-              Must not exceed 10MB
-            </p>
+            <p className="text-[16px] tracking-[-0.48px] text-black">{dropTitle}</p>
+            {dropSubtitle ? (
+              <p className="text-[11px] tracking-[-0.33px] text-primary-grey">{dropSubtitle}</p>
+            ) : (
+              <p className="text-center text-[11px] tracking-[-0.33px] text-primary-grey">
+                Acceptable formats: PDF, DOC, DOCX.
+                <br />
+                Must not exceed 10MB
+              </p>
+            )}
           </div>
         </div>
       </div>

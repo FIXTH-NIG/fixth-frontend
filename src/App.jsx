@@ -11,11 +11,15 @@ import VerifyEmail from './pages/VerifyEmail'
 import Welcome from './pages/Welcome'
 import SettingUp from './pages/SettingUp'
 import OnboardingIndex from './pages/onboarding/OnboardingIndex'
+import OnboardingEmail from './pages/onboarding/OnboardingEmail'
+import OnboardingOtp from './pages/onboarding/OnboardingOtp'
 import StudentProfile from './pages/onboarding/StudentProfile'
+import StudentEducation from './pages/onboarding/StudentEducation'
+import StudentPreferences from './pages/onboarding/StudentPreferences'
 import OnboardingAbout from './pages/onboarding/OnboardingAbout'
-import StudentInternship from './pages/onboarding/StudentInternship'
 import StudentSkills from './pages/onboarding/StudentSkills'
 import StudentLocationSharing from './pages/onboarding/StudentLocationSharing'
+import OnboardingReview from './pages/onboarding/OnboardingReview'
 import OrgDetails from './pages/onboarding/OrgDetails'
 import OrgVerification from './pages/onboarding/OrgVerification'
 import OnboardingComplete from './pages/onboarding/OnboardingComplete'
@@ -144,12 +148,16 @@ export default function App() {
             }
           >
             <Route index element={<OnboardingIndex />} />
+            <Route path="email" element={<OnboardingEmail />} />
+            <Route path="otp" element={<OnboardingOtp />} />
             <Route path="profile" element={<StudentProfile />} />
+            <Route path="education" element={<StudentEducation />} />
+            <Route path="preferences" element={<StudentPreferences />} />
             <Route path="about" element={<OnboardingAbout />} />
-            <Route path="internship-info" element={<StudentInternship />} />
             <Route path="skills" element={<StudentSkills />} />
             <Route path="location-sharing" element={<StudentLocationSharing />} />
-            <Route path="org-details" element={<OrgDetails />} />
+            <Route path="review" element={<OnboardingReview />} />
+            <Route path="details" element={<OrgDetails />} />
             <Route path="verification" element={<OrgVerification />} />
             <Route path="complete" element={<OnboardingComplete />} />
           </Route>

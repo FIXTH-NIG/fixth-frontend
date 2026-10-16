@@ -46,8 +46,8 @@ export default function OTPInput({ value, onChange, error = false }) {
           onPaste={handlePaste}
           inputMode="numeric"
           maxLength={1}
-          className={`h-[79px] w-0 min-w-0 flex-1 rounded-control border text-center text-[24px] tracking-[-0.72px] text-black outline-none ${
-            error ? 'border-error-red' : 'border-grey focus:border-primary-blue'
+          className={`h-[64px] w-0 min-w-0 flex-1 rounded-[12px] border text-center text-[20px] font-medium tracking-[-0.6px] text-black outline-none ${
+            error ? 'border-error-red' : 'border-[#E5EAF1] focus:border-primary-blue'
           }`}
         />
       ))}

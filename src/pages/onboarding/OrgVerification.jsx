@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import OnboardingLayout from '../../components/OnboardingLayout'
-import TextInput from '../../components/TextInput'
+import OnboardingSplit from '../../components/OnboardingSplit'
+import { BackNextRow, SplitInput } from '../../components/SplitFields'
 import DocumentUpload from '../../components/DocumentUpload'
 import { useOnboarding } from '../../lib/OnboardingContext'
-import { STEP_COUNT } from '../../lib/copy'
 
 export default function OrgVerification() {
   const { userType } = useParams()
@@ -17,29 +16,34 @@ export default function OrgVerification() {
     e.preventDefault()
     if (!cacNumber) return
     update({ cacNumber })
-    navigate(`/${userType}/onboarding/complete`)
+    navigate(`/${userType}/onboarding/review`)
   }
 
   return (
-    <OnboardingLayout
+    <OnboardingSplit
+      panelEyebrow="FOR ORGANIZATIONS"
+      headline="Prove you’re the real deal."
+      stepNote="Organization verification"
+      section="ORGANIZATION PROFILE"
+      showProgress={false}
       title="Verification"
       subtitle="Verify your organization"
-      step={3}
-      totalSteps={STEP_COUNT[userType]}
-      onBack={() => navigate(`/${userType}/onboarding/about`)}
-      onSubmit={handleSubmit}
-      nextLabel="Save and Submit"
-      nextDisabled={!cacNumber}
     >
-      <TextInput
-        id="cac-number"
-        label="CAC Registration Number"
-        placeholder="1234567890"
-        value={cacNumber}
-        onChange={(e) => setCacNumber(e.target.value)}
-        required
-      />
-      <DocumentUpload label="CAC Certificate" />
-    </OnboardingLayout>
+      <form onSubmit={handleSubmit} className="flex w-full flex-col gap-5">
+        <SplitInput
+          label="CAC Registration Number"
+          placeholder="1234567890"
+          value={cacNumber}
+          onChange={(e) => setCacNumber(e.target.value)}
+          required
+        />
+        <DocumentUpload label="CAC Certificate" />
+        <BackNextRow
+          onBack={() => navigate(`/${userType}/onboarding/about`)}
+          nextLabel="Save and Submit"
+          nextDisabled={!cacNumber}
+        />
+      </form>
+    </OnboardingSplit>
   )
 }

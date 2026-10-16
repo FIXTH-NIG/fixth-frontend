@@ -1,9 +1,9 @@
 export const STEP_COUNT = {
-  student: 5,
-  organization: 3,
+  student: 7,
+  organization: 5,
 }
 
-const numberWord = { 3: 'three', 5: 'five' }
+const numberWord = { 3: 'three', 5: 'five', 7: 'seven' }
 
 export const copy = {
   student: {
@@ -49,8 +49,8 @@ export function welcomeSubtitle(userType) {
 
 export const otherType = (userType) => (userType === 'student' ? 'organization' : 'student')
 
-export const STUDENT_ONBOARDING_STEPS = ['profile', 'about', 'internship-info', 'skills', 'location-sharing']
-export const ORGANIZATION_ONBOARDING_STEPS = ['org-details', 'about', 'verification']
+export const STUDENT_ONBOARDING_STEPS = ['email', 'otp', 'profile', 'education', 'preferences', 'skills', 'review']
+export const ORGANIZATION_ONBOARDING_STEPS = ['email', 'otp', 'details', 'about', 'review']
 
 export const onboardingSteps = (userType) =>
   userType === 'student' ? STUDENT_ONBOARDING_STEPS : ORGANIZATION_ONBOARDING_STEPS

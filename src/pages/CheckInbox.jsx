@@ -1,6 +1,5 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import AuthLayout from '../components/AuthLayout'
-import Button from '../components/Button'
+import OnboardingSplit from '../components/OnboardingSplit'
 
 export default function CheckInbox() {
   const { userType } = useParams()
@@ -9,25 +8,30 @@ export default function CheckInbox() {
   const email = state?.email ?? 'your email'
 
   return (
-    <AuthLayout>
-      <div className="flex w-full flex-col items-center gap-[54px]">
-        <div className="flex w-full flex-col items-center text-center">
-          <h1 className="font-heading text-[32px] font-medium tracking-[-1.28px] text-black">Check your inbox</h1>
-          <p className="text-[16px] tracking-[-0.48px] text-primary-grey">
-            We sent password reset instructions to &ldquo;{email}&rdquo;. Kindly check your inbox or spam folder to
-            continue
-          </p>
-        </div>
-
-        <div className="flex w-full gap-1">
-          <Button variant="secondary" onClick={() => navigate(`/${userType}/forgot-password`)}>
+    <OnboardingSplit
+      panelEyebrow="CHECK YOUR INBOX"
+      headline="Confirm it's really you."
+      stepNote="Secure account recovery"
+      showProgress={false}
+      title="Check your inbox"
+      subtitle={`We sent password reset instructions to "${email}". Kindly check your inbox or spam folder to continue`}
+    >
+        <div className="flex w-full gap-3">
+          <button
+            type="button"
+            onClick={() => navigate(`/${userType}/forgot-password`)}
+            className="flex-1 cursor-pointer rounded-[12px] border border-[#E2E8F0] py-4 text-[15px] font-medium text-black"
+          >
             Change email
-          </Button>
-          <Button onClick={() => navigate(`/${userType}/reset-password`, { state: { email } })}>
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate(`/${userType}/reset-password`, { state: { email } })}
+            className="flex-[2] cursor-pointer rounded-[12px] bg-primary-blue py-4 text-[15px] font-medium text-white"
+          >
             Open Gmail app
-          </Button>
+          </button>
         </div>
-      </div>
-    </AuthLayout>
+    </OnboardingSplit>
   )
 }

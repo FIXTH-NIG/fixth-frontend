@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import AuthLayout from '../components/AuthLayout'
-import TextInput from '../components/TextInput'
-import Button from '../components/Button'
+import OnboardingSplit from '../components/OnboardingSplit'
+import { BackNextRow, SplitInput } from '../components/SplitFields'
+import StudentForgotPassword from './StudentForgotPassword'
 import { copy } from '../lib/copy'
 
-export default function ForgotPassword() {
+function OrgForgotPassword() {
   const { userType } = useParams()
   const navigate = useNavigate()
   const c = copy[userType].forgotPassword
+
   const [email, setEmail] = useState('')
 
   const handleSubmit = (e) => {
@@ -18,32 +19,30 @@ export default function ForgotPassword() {
   }
 
   return (
-    <AuthLayout>
-      <form onSubmit={handleSubmit} className="flex min-h-[500px] w-full flex-col justify-between">
-        <div className="flex w-full flex-col gap-[54px]">
-          <div className="flex w-full flex-col items-start">
-            <h1 className="font-heading text-[32px] font-medium tracking-[-1.28px] text-black">Forgot Password?</h1>
-            <p className="text-[16px] tracking-[-0.48px] text-primary-grey">{c.subtitle}</p>
-          </div>
-          <TextInput
-            id="email"
-            type="email"
-            label={c.emailLabel}
-            placeholder={c.emailPlaceholder}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            inputClassName="text-black"
-          />
-        </div>
-
-        <div className="flex w-full gap-1">
-          <Button type="button" variant="secondary" onClick={() => navigate(-1)}>
-            Back
-          </Button>
-          <Button type="submit">Submit</Button>
-        </div>
+    <OnboardingSplit
+      panelEyebrow="RESET SECURELY"
+      headline="Let’s get you back to your placements."
+      stepNote="Secure account recovery"
+      showProgress={false}
+      title="Forgot password"
+      subtitle={c.subtitle}
+    >
+      <form onSubmit={handleSubmit} className="flex w-full flex-col gap-5">
+        <SplitInput
+          type="email"
+          label={c.emailLabel}
+          placeholder={c.emailPlaceholder}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <BackNextRow onBack={() => navigate(-1)} nextLabel="Submit" nextDisabled={!email} />
       </form>
-    </AuthLayout>
+    </OnboardingSplit>
   )
+}
+
+export default function ForgotPassword() {
+  const { userType } = useParams()
+  return userType === 'student' ? <StudentForgotPassword /> : <OrgForgotPassword />
 }
